@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-
 <html>
- <head>
- </head>
- <body>
-  <h1>
-    Hello, World!
-  </h1>
- </body>
+<head>
+    <meta charset="UTF-8">
+    <title>뭉탱이</title>
+    <style>
+        .img-box {
+            /* display: flex; */
+            justify-content: center;
+        }
+
+        img {
+            width: 200px;
+            transform-origin: center center;
+        }
+    </style>
+</head>
+<body>
+<div class="img-box">
+    <img id="gif" src="뭉탱이월드지.gif">
+    <img src="PrismaNor.webp">
+</div>
+<div class="v">
+  <video src="igonan.mp4" style="width: 30%; height: auto;" controls loop></video>
+</div>
+<iframe 
+    width="560" 
+    height="315" 
+    src="https://www.youtube.com/embed/4RG4ClVrQlA" 
+    frameborder="0"
+    allowfullscreen>
+</iframe>
+<script>
+    let t = 0;
+
+    function animate() {
+        t += 0.05; // 속도
+        const angle = Math.sin(t) * 30; // 최대 ±30도 흔들림
+
+        document.getElementById("gif").style.transform = 
+            `rotate(${angle}deg)`;
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+</body>
 </html>
