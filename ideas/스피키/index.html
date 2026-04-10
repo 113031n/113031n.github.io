@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>아이디어가 필요해!!!!!!!!!!!!!</title>
+    <style>
+        body {
+            margin:0
+        }
+        div {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            width:1200px;
+            height:800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="world"></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+</body>
+</html>
+<script src="slingshot.js"></script>
+<script>
+    Example.slingshot();
+</script>
