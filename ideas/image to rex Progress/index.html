@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>아이디어가 필요해!!!!!!!!!!!!!</title>
+    <style>
+        body {
+            margin: 5px;
+        }
+        div {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+        pre {
+         font-family: Arial, sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            width: 500px;
+            font-family: "Noto Sans KR", sans-serif;
+        }
+        #title {
+            text-align: center;
+            font-size: 24px;
+            background: #ffffff;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>렉스 프로그레스 전환기 v1</h1>
+    <img src="PrismaNor.webp" width="20%" height="auto"
+        style="position: fixed; top: 0; right: 0;"></img>
+    <div>
+        <div>
+            <h3>붙여넣기 가능</h3>
+            <img src="스크린샷 2026-02-28 193502.png" width="100" height="100">예시</div>
+            <input type="file" id="fileinput" accept="image/*" width="10">
+            <img id="fileimg" width="250" height="250"></img>
+        </div>
+        <div>
+            <pre id="result"></pre>
+            <table border="1" id="sheet">
+                <caption id="title"></caption>
+                <button id="run" style="width: 100px;">계산</button>
+                <thead>
+                    <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Current</th>
+                    <th>Complete</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'></script>
+</body>
+</html>
+<script>
+    const input = document.getElementById('fileinput')
+    const img = document.getElementById('fileimg')
+    const result = document.getElementById("result");
+    const title = document.getElementById("title");
+    input.addEventListener("change", (e) => {
+        const file = e.target.files[0]
+        if (!file) return;
+        img.src = URL.createObjectURL(file)
+        handleFile(file)
+    })
+
+    document.addEventListener("paste", (e) => {
+     const items = e.clipboardData.items;
+
+    for (const item of items) {
+        if (item.type.startsWith("image/")) {
+            const file = item.getAsFile();
+            img.src = URL.createObjectURL(file)
+            handleFile(file)
+        }
+    }
+    });
+
+    function parseMaterials(text) {
+        const lines = text.split("\n");
+        const result = [],
+            ti = lines[0]
+
+        for (let line of lines) {
+            // "- 335,158/380,000 Monostate"
+            const match = line.match(/-?\s*([\d,]+)\s*\/\s*([\d,]+)\s*([a-zA-Z가-힣].+)/);
+            if (!match) continue;
+
+            const current = parseInt(match[1].replace(/,/g, ""));
+            const Amount = parseInt(match[2].replace(/,/g, ""));
+            const name = match[3].trim();
+
+            result.push({
+                name,
+                current,
+                Amount,
+                percent: Math.min((current / Amount) * 100, 100).toFixed(1)
+            });
+        }
+    return [result,ti];
+    }
+    function getColor(percent) {
+        if (percent==100.0){
+            return `hsl(${percent},100%, 60%)`
+        }
+        const hue = percent * 1.2
+        return `hsl(${hue},100%, 80%)`;
+    }
+    function renderTable(data) {
+        const tbody = document.querySelector("#sheet tbody");
+
+        tbody.innerHTML = data.map(item => `
+        <tr>
+            <td>${item.name}</td>
+            <td contenteditable="true">${item.current.toLocaleString()}</td>
+            <td contenteditable="true">${item.Amount.toLocaleString()}</td>
+            <td style="background:${getColor(item.percent)}">
+                ${item.percent}%
+            </td>
+            </tr>
+        `).join("");
+        }
+    async function handleFile(file) {
+        if (!file) return;
+
+        result.textContent = "분석 중...";
+
+        const { data: { text } } = await Tesseract.recognize(
+            file,
+            "eng",
+            {
+                tessedit_pageseg_mode: 6,
+                preserve_interword_spaces: "1",
+                tessedit_char_whitelist:
+                "0123456789/,ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz[] "
+            }
+        );
+
+        const [parsed,ti] = parseMaterials(text);
+        console.log(parsed)
+        title.textContent = ti.split("[")[0].trim()
+        result.textContent = parsed.length >= 1 ? "분석 성공" : "분석 실패";
+        renderTable(parsed)
+    }
+    document.querySelector("table").addEventListener("input", () => {
+        const rows = document.querySelectorAll("tbody tr");
+
+        rows.forEach(row => {
+            const cells = row.querySelectorAll("td");
+
+            const total = Number(cells[1].innerText.replace(/,/g, ""));
+            const current = Number(cells[2].innerText.replace(/,/g, ""));
+
+            let percent = "???";
+
+            if (total > 0 && !isNaN(current) && !isNaN(total)) {
+                percent = ((current / total) * 100).toFixed(1) + "%";
+            }
+
+            cells[3].innerText = percent;
+            cells[3].style.background = getColor(percent)
+        });
+        });
+</script>
