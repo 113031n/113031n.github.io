@@ -61,45 +61,22 @@
             },
             volume : -5
         }).toDestination();
-        const fm = new Tone.PolySynth(Tone.FMSynth,{
-            harmonicity: 3,
-            modulationIndex: 10,
-
-            oscillator: {
-                type: "sine"
-            },
-
-            envelope: {
-                attack: 0.01,
-                decay: 0.2,
-                sustain: 0.3,
-                release: 1
-            },
-
-            modulation: {
-                type: "square"
-            },
-
-            modulationEnvelope: {
-                attack: 0.1,
-                decay: 0.2,
-                sustain: 0.5,
-                release: 0.5
-            },
-        }).toDestination();
-        const am = new Tone.PolySynth(Tone.AMSynth).toDestination();
         const INSTRUMENTS = {
-            fm,
-            am,
             piano,
             square,
             sawtooth,
             triangle,
             sine
         };
+        const MIDIS = [
+            'a.mid',
+            'aa.mid'
+        ]
+        let parts = [];
+
         loadMIDI()
         async function loadMIDI() {
-            const response = await fetch('aa.mid');
+            const response = await fetch(MIDIS[Math.floor(Math.random() * MIDIS.length)]);
             const array = await response.arrayBuffer();
             const midi = new Midi(array);
             Tone.Transport.bpm.value = midi.header.tempos[0].bpm;
@@ -110,7 +87,12 @@
             const randomKey =
             keys[Math.floor(Math.random() * keys.length)];
             const synth = INSTRUMENTS[randomKey];
-
+            synth.maxPolyphony = 64;
+            synth.set({
+                envelope: {
+                    release: 0.05
+                }
+            });
             console.log(randomKey, rm)
             for (const track of midi.tracks) {
                 const part = new Tone.Part((time, note) => {
@@ -121,6 +103,7 @@
                         note.velocity
                     );
                 }, track.notes).start(0);
+                parts.push(part);
             }
             Tone.Transport.loop = true;
             Tone.Transport.loopStart = 0;
@@ -138,6 +121,9 @@
             btn.textContent = "play";
             await Tone.Transport.stop();
             Tone.Transport.cancel();
+            Tone.Transport.position = 0;
+            parts.forEach(p => p.dispose());
+            parts = [];
             loadMIDI()
         }
     });
