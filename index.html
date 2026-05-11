@@ -24,7 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tonejs/midi"></script>
 </head>
 <body>
-    <img src="uncanny-cat-gdmi.gif"></img>
+    <img id="image" src="uncanny-cat-gdmi.gif"></img>
     <button id="play">hi</button>
     <div>
         <h1>아이디어가 필요해</h1>
@@ -111,11 +111,13 @@
         }
         let played = false
         const btn = document.getElementById("play")
+        const img = document.getElementById("image");
     btn.addEventListener("click", async () => {
         if (!played){
             played = true
             btn.textContent = "stop";
             await Tone.Transport.start();
+            img.src = "ai-chinese-cat-dancing.gif"
         }else{
             played = false
             btn.textContent = "play";
@@ -125,6 +127,7 @@
             parts.forEach(p => p.dispose());
             parts = [];
             loadMIDI()
+            img.src = "uncanny-cat-gdmi.gif"
         }
     });
     </script>
