@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>아이디어가 필요해!!!!!!!!!!!!!</title>
     <style>
-        body {
-            margin:0
+        html,body {
+            margin:0;
+            padding: 0;
         }
         img {
             max-width: 100%;
@@ -15,6 +16,7 @@
             display: flex;
             flex-direction: column;
             margin: 20px;
+            gap: 10px;
         }
         a {
             width: fit-content;
@@ -32,6 +34,9 @@
         <a href="ideas/스피키/">스핔이</a>
         <a href="ideas/image to rex Progress">렉스 프로그레스 전환기</a>
     </div>
+    <img src="cat-bird-bird-cat.gif" width="100"></img>
+    <img src="cat-bird-bird-cat.gif" width="100"></img>
+    <img src="cat-bird-bird-cat.gif" width="100"></img>
     <script>
         const piano = new Tone.Sampler({
             urls: { C4: "C4.mp3",A4: "A4.mp3" },
@@ -70,10 +75,11 @@
         };
         const MIDIS = [
             'a.mid',
-            'aa.mid'
+            'aa.mid',
+            'aaa.mid'
         ]
         let parts = [];
-
+        let synth
         loadMIDI()
         async function loadMIDI() {
             const response = await fetch(MIDIS[Math.floor(Math.random() * MIDIS.length)]);
@@ -86,7 +92,7 @@
             const keys = Object.keys(INSTRUMENTS);
             const randomKey =
             keys[Math.floor(Math.random() * keys.length)];
-            const synth = INSTRUMENTS[randomKey];
+            synth = INSTRUMENTS[randomKey];
             synth.maxPolyphony = 64;
             synth.set({
                 envelope: {
@@ -123,6 +129,8 @@
             btn.textContent = "play";
             await Tone.Transport.stop();
             Tone.Transport.cancel();
+            synth.releaseAll();
+            synth = null
             Tone.Transport.position = 0;
             parts.forEach(p => p.dispose());
             parts = [];
