@@ -74,33 +74,48 @@
             sine
         };
         const MIDIS = [
-            'a.mid',
-            'aa.mid',
+            {
+                file: "a.mid",
+                volume: 0,
+                maxPolyphony:16
+            },
+            {
+                file: "aa.mid",
+                volume: 0,
+                maxPolyphony:64
+            },
+            {
+                file: "aaaaa.mid",
+                volume: 0,
+                maxPolyphony:64
+            },
         ]
         let parts = [];
         let synth
         loadMIDI()
         async function loadMIDI() {
-            const response = await fetch(MIDIS[Math.floor(Math.random() * MIDIS.length)]);
+            const data = MIDIS[Math.floor(Math.random() * MIDIS.length)]
+            const response = await fetch(data.file);
             const array = await response.arrayBuffer();
             const midi = new Midi(array);
             Tone.Transport.bpm.value = midi.header.tempos[0].bpm;
             Tone.Transport.PPQ = midi.header.ppq;
             const tracks = [];
-            const rm = Math.floor(Math.random() * 7 - 2)
+            const rm = Math.floor(Math.random() * 7) - 2
             const keys = Object.keys(INSTRUMENTS);
             const randomKey =
             keys[Math.floor(Math.random() * keys.length)];
             synth = INSTRUMENTS[randomKey];
-            synth.maxPolyphony = 64;
+            synth.maxPolyphony = data.maxPolyphony
+            synth.volume.value = synth.volume.value+data.volume;
             synth.set({
                 envelope: {
                     release: 0.05
                 }
             });
-            console.log(randomKey, rm)
             for (const track of midi.tracks) {
                 const part = new Tone.Part((time, note) => {
+                    //console.log(note.velocity)
                     synth.triggerAttackRelease(
                         Tone.Frequency(note.midi + rm, "midi"),
                         note.duration,
@@ -110,6 +125,7 @@
                 }, track.notes).start(0);
                 parts.push(part);
             }
+            console.log(randomKey)
             Tone.Transport.loop = true;
             Tone.Transport.loopStart = 0;
             Tone.Transport.loopEnd = midi.duration;
@@ -120,11 +136,12 @@
     btn.addEventListener("click", async () => {
         if (!played){
             played = true
+            img.src = "ai-chinese-cat-dancing.gif"
             btn.textContent = "stop";
             await Tone.Transport.start();
-            img.src = "ai-chinese-cat-dancing.gif"
         }else{
             played = false
+            img.src = "uncanny-cat-gdmi.gif"
             btn.textContent = "play";
             await Tone.Transport.stop();
             Tone.Transport.cancel();
@@ -134,7 +151,6 @@
             parts.forEach(p => p.dispose());
             parts = [];
             loadMIDI()
-            img.src = "uncanny-cat-gdmi.gif"
         }
     });
     </script>
