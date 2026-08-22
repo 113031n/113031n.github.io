@@ -3,8 +3,9 @@ export async function img_init() {
     const container = document.createElement("div");
 
     container.style.display = "grid";
-    container.style.gridTemplateColumns = "repeat(auto-fill, minmax(200px, 1fr))";
+    //container.style.gridTemplateColumns = "repeat(auto-fill, minmax(200px, 1fr))";
     container.style.gap = "10px";
+    //container.style.alignItems = "start";
 
     document.body.appendChild(container);
 
@@ -34,7 +35,7 @@ export async function img_init() {
         img.src = file.path;
         //img.width = 300;
 
-        document.body.appendChild(img);
+        container.appendChild(img);
 
     } else if (/\.(mp4|webm|ogg)$/i.test(file.name)) {
 
@@ -42,9 +43,9 @@ export async function img_init() {
 
         video.src = file.path;
         video.controls = true;
-        video.width = 300;
+        //video.width = 300;
 
-        document.body.appendChild(video);
+        container.appendChild(video);
     }
 }
     // const img = document.createElement("img");
