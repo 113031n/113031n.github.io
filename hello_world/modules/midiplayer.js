@@ -1,13 +1,16 @@
 
-let playbutton
 let isplay = false
 let parts = [];
 let synth
 const volume = new Tone.Volume(-10).toDestination();
 
 export function midi_init() {
-    playbutton = document.createElement("button");
+    const cat = document.createElement("img");
+    cat.src = "./hello_world/modules/midis/uncanny-cat-gdmi.gif"
+
+    const playbutton = document.createElement("button");
     playbutton.textContent = "Play";
+
     const slider = document.createElement("input");
 
     slider.type = "range";
@@ -31,14 +34,18 @@ export function midi_init() {
             parts = [];
             loadMIDI()
             playbutton.textContent = "play";
+            cat.src = "./hello_world/modules/midis/uncanny-cat-gdmi.gif"
         } else {
             isplay = true
             playbutton.textContent = "stop";
             await Tone.Transport.start();
+            cat.src = "./hello_world/modules/midis/ai-chinese-cat-dancing.gif"
         }
     })
+    //document.body.appendChild(cat);
     document.body.appendChild(playbutton);
     document.body.appendChild(slider);
+    document.body.appendChild(cat);
     loadMIDI()
 };
 const piano = new Tone.Sampler({
@@ -94,7 +101,7 @@ const MIDIS = [
     },
     {
         file: "Tetris Reimagined.mid",
-        volume: 0,
+        volume: 5,
         maxPolyphony:32
     },
     {
