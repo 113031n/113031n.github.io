@@ -43,9 +43,20 @@ export function midi_init() {
         }
     })
     //document.body.appendChild(cat);
-    document.body.appendChild(playbutton);
-    document.body.appendChild(slider);
-    document.body.appendChild(cat);
+    const a = document.getElementById("a")
+    const iframe = document.createElement("iframe");
+
+    iframe.src = "https://113031n.notion.site/ebd//3b667654e12f80f6a20ee7914a0e568a";
+    iframe.width = "800";
+    iframe.height = "600";
+    iframe.style.border = "none";
+    iframe.allowFullscreen = true;
+    iframe.style.marginLeft = "20px";
+
+    a.appendChild(playbutton);
+    a.appendChild(slider);
+    a.appendChild(cat);
+    a.appendChild(iframe);
     loadMIDI()
 };
 const piano = new Tone.Sampler({
@@ -84,6 +95,21 @@ const INSTRUMENTS = {
     sine
 };
 const MIDIS = [
+    {
+        file: "b.mid",
+        volume: 0,
+        maxPolyphony:64
+    },
+    {
+        file: "Beethoven_Virus.mid.mid",
+        volume: 0,
+        maxPolyphony:64
+    },
+    {
+        file: "c.mid",
+        volume: -2,
+        maxPolyphony:64
+    },
     {
         file: "a.mid",
         volume: 0,
