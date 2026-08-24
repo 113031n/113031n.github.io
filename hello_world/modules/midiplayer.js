@@ -14,10 +14,10 @@ export function midi_init() {
     const slider = document.createElement("input");
 
     slider.type = "range";
-    slider.min = "-20";
+    slider.min = "-50";
     slider.max = "10";
     slider.step = "0.5";
-    slider.value = "0";
+    slider.value = "-30";
 
     slider.addEventListener("input", () => {
         volume.volume.value = slider.value;
@@ -104,6 +104,11 @@ const MIDIS = [
         file: "Beethoven_Virus.mid.mid",
         volume: 0,
         maxPolyphony:64
+    },
+    {
+        file: "TheKnight.mid",
+        volume: 0,
+        maxPolyphony:128
     },
     {
         file: "c.mid",
