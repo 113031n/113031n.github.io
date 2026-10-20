@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101326" />
+    <title>MEOWL Survival</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="game-layout" aria-label="MEOWL Survival 게임">
+        <div class="game-column">
+          <div class="game-frame">
+            <div class="hud">
+              <div><span class="hud-label">LEVEL</span><strong id="score">01</strong></div>
+              <div class="hud-center"><span class="live-dot"></span><span id="game-state">READY</span><span id="stage">STAGE 1</span><span id="timer">00:00</span></div>
+              <div class="hud-right"><span class="hud-label">HP</span><strong id="hp">♥♥♥</strong></div>
+            </div>
+            <div class="canvas-wrap">
+              <canvas id="game" width="800" height="500" aria-label="게임 화면"></canvas>
+              <div class="joystick" id="joystick" aria-label="가상 조이스틱">
+                <div class="joystick-ring"><div class="joystick-knob" id="joystick-knob"></div></div>
+                <span>MOVE</span>
+              </div>
+              <div class="overlay" id="overlay">
+                <div class="overlay-card">
+                  <span class="orbit-icon">✦</span>
+                  <p class="eyebrow" id="overlay-kicker">COSMIC SURVIVORS</p>
+                  <h2 id="overlay-title">생존을 시작할까요?</h2>
+                  <p id="overlay-copy">몰려오는 외계 생명체를 피하세요.<br />무기는 자동으로 발사되고, 경험치를 모아 강해져요.</p>
+                  <button id="start-button" type="button">게임 시작 <span>→</span></button>
+                  <small>이동 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 또는 방향키 · 공격은 자동</small>
+                </div>
+              </div>
+            </div>
+            <div class="levelup-overlay hidden" id="levelup-overlay" aria-live="polite">
+              <div class="levelup-card"><p class="eyebrow">LEVEL UP</p><h2>강화 선택</h2><p class="levelup-subtitle">생존에 도움이 될 능력을 골라보세요.</p><div class="upgrade-options" id="upgrade-options"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="game-data.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
