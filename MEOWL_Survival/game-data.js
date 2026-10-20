@@ -107,7 +107,7 @@ window.GAME_DATA = {
       attack: { pattern: 'fan', projectile: 'missile', interval: 3, count: 8, spread: 0, rotationDegPerVolley: 24 },
     },
     aigonan : {
-      name: 'AI고난', sprite: 'assets/aigonan.gif', size: 120,
+      name: 'AI고난', sprite: 'assets/aigonan.gif', size: 140,
       hp: 60, speed: 20, color: '#c18cff', spawnSound: 'aigonan',
       attack: { pattern: 'fan', projectile: 'nose', interval: 2, count: 5, spread: 10, rotationDegPerVolley: 24 },
     }
