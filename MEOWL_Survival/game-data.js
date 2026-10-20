@@ -21,7 +21,7 @@ window.GAME_DATA = {
     credits: [
       { role: '기획 · 개발', name: '@113031n' },
       { role: '코드 작성', name: 'Chat GPT'},
-      { role: "", name: '반응 좋으면 v2'}
+      { role: "", name: '반응 나쁘면 v2'}
     ],
   },
   projectiles: {
@@ -66,7 +66,7 @@ window.GAME_DATA = {
     },
     igonan: {
       name: '아이고난', sprite: 'assets/igonan.png', size: 20,
-      hp: 9, speedMin: 40, speedMax: 40, color: '#ff7e9b',
+      hp: 8, speedMin: 40, speedMax: 40, color: '#ff7e9b',
       spawnSound: 'igonansound', deathSound: 'igonansound',
     },
     laughingcat: {
@@ -103,18 +103,18 @@ window.GAME_DATA = {
     // },
     germany_cat : {
       name: '독일 고양이', sprite: 'assets/GermanCat.gif', size: 90,
-      hp: 30, speed: 10, color: '#c18cff', spawnSound: 'germancatsound',
+      hp: 25, speed: 12, color: '#c18cff', spawnSound: 'germancatsound',
       attack: { pattern: 'fan', projectile: 'missile', interval: 3, count: 8, spread: 0, rotationDegPerVolley: 24 },
     },
     aigonan : {
       name: 'AI고난', sprite: 'assets/aigonan.gif', size: 120,
-      hp: 60, speed: 23, color: '#c18cff', spawnSound: 'aigonan',
+      hp: 60, speed: 20, color: '#c18cff', spawnSound: 'aigonan',
       attack: { pattern: 'fan', projectile: 'nose', interval: 2, count: 5, spread: 10, rotationDegPerVolley: 24 },
     }
   },
   stages: [
-    { name: 'car', duration: 70, background: 'catground',monsters: { laughingcat: 15, ccat: 35 }, boss: 'germany_cat', bossAtEnd: 40 },
-    { name: '뭉탱이의 습격', duration: 70, background: 'kaneground', monsters: { mte: 35, igonan: 10 }, boss: 'aigonan', bossAtEnd: 40 },
+    { name: 'car', duration: 70, background: 'catground',monsters: { laughingcat: 15, ccat: 35 }, boss: 'germany_cat', bossAtEnd: 35 },
+    { name: '뭉탱이의 습격', duration: 70, background: 'kaneground', monsters: { mte: 35, igonan: 10 }, boss: 'aigonan', bossAtEnd: 35 },
     // { name: '성운 습격', duration: 60, background: 'nebula', monsters: { wisp: 48, brute: 10 }, boss: 'bruteCaptain', bossAtEnd: 12 },
     // { name: '최종 포위', duration: 60, background: 'eclipse', monsters: { wisp: 55, brute: 20 }, boss: 'voidCore', bossAtEnd: 12 },
   ],

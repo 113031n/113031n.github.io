@@ -15,7 +15,8 @@
   const spriteFiles={...Object.fromEntries(Object.entries(MONSTERS).map(([kind,data])=>[kind,data.sprite])),...Object.fromEntries(Object.entries(BOSSES).map(([kind,data])=>[`boss:${kind}`,data.sprite])),player:PLAYER_SETTINGS.sprite||'assets/player-pilot.svg',...Object.fromEntries(Object.entries(PROJECTILES).filter(([,data])=>data.shape==='image'&&data.image).map(([kind,data])=>[kind,data.image]))};
   const sprites=Object.fromEntries(Object.entries(spriteFiles).map(([kind])=>[kind,new Image()]));
   for(const [kind,img] of Object.entries(sprites))img.src=spriteFiles[kind];
-  const W = canvas.width, H = canvas.height, keys = new Set(), MAX_ENEMIES = 90;
+  let W = canvas.width, H = canvas.height;
+  const keys = new Set(), MAX_ENEMIES = 90;
   const gifLayer=document.createElement('div');gifLayer.style.cssText='position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden';canvas.parentElement.insertBefore(gifLayer,canvas.nextSibling);
   const bossHudLayer=document.createElement('div');bossHudLayer.style.cssText='position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden';gifLayer.after(bossHudLayer);
   const bossHudNodes=new Map();
@@ -46,6 +47,14 @@
   let elapsed=0, fireClock=0, xp=0, nextXp=5, level=1, lastTime=0, currentStage=0, stageSpawned={}, bossSpawnedForStage=-1;
   const rand=(a,b)=>a+Math.random()*(b-a), clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   const fmtTime=t=>`${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}`;
+  function resizeCanvas(){
+    const rect=canvas.parentElement.getBoundingClientRect();if(!rect.width||!rect.height)return;
+    const scale=Math.min(rect.width/800,rect.height/500),nextW=Math.max(1,Math.round(rect.width/scale)),nextH=Math.max(1,Math.round(rect.height/scale));
+    if(nextW===W&&nextH===H)return;
+    const sx=nextW/W,sy=nextH/H;
+    for(const entity of [player,...enemies,...bosses,...bullets,...enemyBullets,...gems,...stars])if(entity){if(Number.isFinite(entity.x))entity.x*=sx;if(Number.isFinite(entity.y))entity.y*=sy;if(Number.isFinite(entity.vx))entity.vx*=sx;if(Number.isFinite(entity.vy))entity.vy*=sy}
+    canvas.width=nextW;canvas.height=nextH;W=nextW;H=nextH;
+  }
 
   function reset(){
     const projectile=PROJECTILES[PLAYER_SETTINGS.projectile]||PROJECTILES.starBolt;
@@ -173,5 +182,5 @@
   function releaseJoystick(e){if(e.pointerId!==joyPointer)return;joyPointer=null;joyX=0;joyY=0;joystick.classList.remove('active');joystickKnob.style.transform='translate(0, 0)'}
   joystick.addEventListener('pointerup',releaseJoystick);joystick.addEventListener('pointercancel',releaseJoystick);
   window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));window.addEventListener('blur',()=>{keys.clear();joyPointer=null;joyX=0;joyY=0;joystick.classList.remove('active');joystickKnob.style.transform='translate(0, 0)'});startButton.addEventListener('click',start);
-  reset();requestAnimationFrame(frame);
+  resizeCanvas();window.addEventListener('resize',resizeCanvas);new ResizeObserver(resizeCanvas).observe(canvas.parentElement);reset();requestAnimationFrame(frame);
 })();
