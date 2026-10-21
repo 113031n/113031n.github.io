@@ -14,7 +14,7 @@
           <div class="game-frame">
             <div class="hud">
               <div><span class="hud-label">LEVEL</span><strong id="score">01</strong></div>
-              <div class="hud-center"><span class="live-dot"></span><span id="game-state">READY</span><span id="stage">STAGE 1</span><span id="timer">00:00</span></div>
+              <div class="hud-center"><span class="live-dot"></span><span id="game-state">READY</span><span id="stage">STAGE 1</span><span id="remaining-count" aria-live="polite"></span><span id="timer">00:00</span><span id="projectile-count" aria-live="polite"></span></div>
               <div class="hud-right"><span class="hud-label">HP</span><strong id="hp">♥♥♥</strong></div>
             </div>
             <div class="canvas-wrap">
@@ -29,6 +29,7 @@
                   <p class="eyebrow" id="overlay-kicker">COSMIC SURVIVORS</p>
                   <h2 id="overlay-title">생존을 시작할까요?</h2>
                   <p id="overlay-copy">몰려오는 외계 생명체를 피하세요.<br />무기는 자동으로 발사되고, 경험치를 모아 강해져요.</p>
+                  <div class="special-skill-picker"><span>특수 스킬 선택 · 하트가 깎일 때 발동</span><div id="special-skill-options" class="special-skill-options"></div></div>
                   <button id="start-button" type="button">게임 시작 <span>→</span></button>
                   <small>이동 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 또는 방향키 · 공격은 자동</small>
                 </div>
