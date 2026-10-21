@@ -156,7 +156,6 @@ window.GAME_DATA = {
       attack: { pattern: 'fan', projectile: 'missile', sound: 'rpgs', interval: 3, count: 6, spread: 0, rotationDegPerVolley: 24 },
     },
     aigonan : {
-<<<<<<< HEAD
       name: 'AI고난', sprite: 'assets/aigonan.gif', size: 120,
       hp: 65, speed: 20, color: '#c18cff', spawnSound: 'aigonan',deathSound: 'bossd',
       attack: { pattern: 'fan', projectile: 'nose', interval: 1.5, count: 5, spread: 10, rotationDegPerVolley: 24 },
@@ -169,11 +168,6 @@ window.GAME_DATA = {
       attack1: { pattern: 'radial',duration: 2, projectile: 'nose', projectileOptions: {speed: 200,radius: 8}, interval: 0.1, count: 5, spread: 10, rotationDegPerVolley: 24, motion: {rotationDegPerSec: 45,speedCurve: { start: 0.5, end: 2, duration: 2, easing: 'ease-in' }}},
       attack2: { pattern: 'radial',duration: 2, projectile: 'nose', projectileOptions: {speed: 400,radius: 10}, interval: 0.1, count: 5, spread: 10, rotationDegPerVolley: 24, motion: {rotationDegPerSec: -45,speedCurve: { start: 0.5, end: 2, duration: 2, easing: 'ease-in' }}},
       attack3: { pattern: 'radial',duration: 2, projectile: 'nose', projectileOptions: {speed: 200,radius: 8}, interval: 0.1, count: 5, spread: 10, rotationDegPerVolley: 24, motion: {rotationDegPerSec: -45,speedCurve: { start: 0.5, end: 2, duration: 2, easing: 'ease-in' }}},
-=======
-      name: 'AI고난', sprite: 'assets/aigonan.gif', size: 140,
-      hp: 60, speed: 20, color: '#c18cff', spawnSound: 'aigonan',
-      attack: { pattern: 'fan', projectile: 'nose', interval: 2, count: 5, spread: 10, rotationDegPerVolley: 24 },
->>>>>>> 3fa39c3376e0e38fcdb042333fcd755f65873849
     }
   },
   stages: [
