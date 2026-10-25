@@ -12,10 +12,12 @@
       <section class="game-layout" aria-label="MEOWL Survival 게임">
         <div class="game-column">
           <div class="game-frame">
-            <div class="hud">
-              <div><span class="hud-label">LEVEL</span><strong id="score">01</strong></div>
-              <div class="hud-center"><span class="live-dot"></span><span id="game-state">READY</span><span id="stage">STAGE 1</span><span id="remaining-count" aria-live="polite"></span><span id="timer">00:00</span><span id="projectile-count" aria-live="polite"></span></div>
-              <div class="hud-right"><span class="hud-label">HP</span><strong id="hp">♥♥♥</strong></div>
+            <div class="hud" aria-label="게임 진행 상태">
+              <div class="hud-level"><span class="hud-label">LEVEL</span><strong id="score">01</strong></div>
+              <div class="hud-center"><span id="game-state">READY</span><div class="hud-route"><span id="stage">STAGE 1</span><span id="timer" aria-label="경과 시간">00:00</span></div><div class="hud-metrics"><span id="remaining-count" aria-live="polite"></span><span id="projectile-count" aria-live="polite"></span></div></div>
+              <label class="hud-volume" for="master-volume"><span class="volume-caption">볼륨 <output id="volume-value" for="master-volume">100%</output></span><input id="master-volume" type="range" min="0" max="100" step="1" value="100" aria-label="전체 볼륨" /></label>
+              <div class="hud-right"><span class="hud-label">LIFE</span><strong id="hp" aria-label="체력">♥♥♥</strong></div>
+              <span class="xp-track" id="xp-bar" role="progressbar" aria-label="다음 레벨까지의 경험치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="xp-fill" id="xp-fill"></span></span>
             </div>
             <div class="canvas-wrap">
               <canvas id="game" width="800" height="500" aria-label="게임 화면"></canvas>
@@ -23,13 +25,13 @@
                 <div class="joystick-ring"><div class="joystick-knob" id="joystick-knob"></div></div>
                 <span>MOVE</span>
               </div>
-              <div class="overlay" id="overlay">
+              <div class="overlay intro-mode" id="overlay">
                 <div class="overlay-card">
                   <span class="orbit-icon">✦</span>
-                  <p class="eyebrow" id="overlay-kicker">COSMIC SURVIVORS</p>
+                  <p class="eyebrow" id="overlay-kicker">MEOWL SURVIVAL</p>
                   <h2 id="overlay-title">생존을 시작할까요?</h2>
                   <p id="overlay-copy">몰려오는 외계 생명체를 피하세요.<br />무기는 자동으로 발사되고, 경험치를 모아 강해져요.</p>
-                  <div class="special-skill-picker"><span>특수 스킬 선택 · 하트가 깎일 때 발동</span><div id="special-skill-options" class="special-skill-options"></div></div>
+                  <div class="special-skill-picker skill-picker-hidden"><div class="skill-picker-heading"><span>SPECIAL SKILLS</span><span>하나의 스킬을 선택하세요</span></div><div id="special-skill-options" class="special-skill-options"></div></div>
                   <button id="start-button" type="button">게임 시작 <span>→</span></button>
                   <small>이동 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 또는 방향키 · 공격은 자동</small>
                 </div>
